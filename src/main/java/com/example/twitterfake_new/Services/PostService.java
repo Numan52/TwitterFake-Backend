@@ -6,6 +6,7 @@ import com.example.twitterfake_new.Models.PostRequest;
 import com.example.twitterfake_new.Models.User;
 import com.example.twitterfake_new.Repositories.PostRepository;
 import com.example.twitterfake_new.Repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 
 @Service
 public class PostService {
@@ -44,6 +46,7 @@ public class PostService {
                     .map(response -> new PostDto(
                             response.getContent(),
                             response.getId(),
+                            response.getUser().getId(),
                             response.getParentPost() != null ? response.getParentPost().getId() : null,
                             null,
                             response.getUser().getUsername(),
@@ -57,6 +60,7 @@ public class PostService {
         return new PostDto(
                 post.getContent(),
                 post.getId(),
+                post.getUser().getId(),
                 post.getParentPost() != null ? post.getParentPost().getId() : null,
                 responses,
                 post.getUser().getUsername(),

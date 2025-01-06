@@ -27,11 +27,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+
         String path = request.getRequestURI();
-//        if (path.equals("/register") || path.equals("/login")) {
-//            filterChain.doFilter(request, response); // Skip JWT validation for these endpoints
-//            return;
-//        }
+        if (path.equals("/register") || path.equals("/login")) {
+            System.out.println("skip");
+            filterChain.doFilter(request, response); // Skip JWT validation for these endpoints
+            return;
+        }
 
         String authHeader = request.getHeader("Authorization");
         String username = null;
@@ -44,13 +46,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             } catch (ExpiredJwtException e) {
                 System.out.println("Jwt error: " + e);
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                response.setContentType("application/json");
                 response.getWriter().write("Expired JWT token. Pls login again");
                 return;
             } catch (Exception e) {
                 System.out.println("Jwt error: " + e);
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                response.getWriter().write("Invalid JWT token");
+                response.getWriter().write("Invalid JWT token. Pls login again");
                 return;
             }
 

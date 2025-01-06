@@ -1,6 +1,8 @@
 package com.example.twitterfake_new.Models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
+import org.hibernate.usertype.UserTypeLegacyBridge;
 
 import java.util.List;
 import java.util.Set;
@@ -16,6 +18,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Lob
+    private byte[] imageData;
 
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
@@ -65,4 +69,11 @@ public class User {
         this.posts = posts;
     }
 
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
 }

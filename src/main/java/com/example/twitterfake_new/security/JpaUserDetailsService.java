@@ -21,7 +21,7 @@ public class JpaUserDetailsService implements UserDetailsService {
         System.out.println("Username: " + username);
         Optional<User> userOptional = Optional.ofNullable(userRepository.findByUsername(username));
         System.out.println("hellolol");
-        userOptional.orElseThrow(() -> new UsernameNotFoundException("Username does not exist"));
+        userOptional.orElseThrow(() -> new UsernameNotFoundException("Username does not exist: " + username));
 
         return userOptional.map(user -> new MyUserDetails(user)).get();
     }

@@ -34,12 +34,13 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody AuthenticationRequest authenticationRequest) {
+        System.out.println("register");
         String username = authenticationRequest.getUsername();
         User user = userService.findUserByUsername(username);
-
+        System.out.println("register");
         if (user != null) {
             System.out.println("user exists");
-            return ResponseEntity.status(500).body("A user with this username already exists.");
+            return ResponseEntity.status(400).body("A user with this username already exists.");
         } else {
             userService.saveUser(new User(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
             return ResponseEntity.status(200).body("Registration Successful");
@@ -56,7 +57,7 @@ public class AuthenticationController {
             System.out.println("Incorrect username or passoword: " +  e);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect username or password.");
         }
-        System.out.println("yololo");
+
         try {
             UserDetails userDetails = jpaUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
             String jwt = jwtUtil.generateToken(userDetails);

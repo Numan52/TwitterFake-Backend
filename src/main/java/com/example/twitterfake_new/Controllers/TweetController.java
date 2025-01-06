@@ -7,6 +7,7 @@ import com.example.twitterfake_new.Models.User;
 import com.example.twitterfake_new.Repositories.PostRepository;
 import com.example.twitterfake_new.Services.PostService;
 import com.example.twitterfake_new.Services.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,7 @@ public class TweetController {
     @Autowired
     private UserService userService;
 
+    @Transactional
     @PostMapping("/api/postTweet")
     public ResponseEntity<?> postTweet(@RequestBody PostRequest postRequest) {
         try {
@@ -40,7 +42,7 @@ public class TweetController {
         }
     }
 
-
+    @Transactional
     @GetMapping("/api/getTweets")
     public Page<PostDto> getAllPosts(@RequestParam int page, @RequestParam int size) {
         Page<PostDto> posts = postService.getPosts(page, size);
@@ -48,7 +50,7 @@ public class TweetController {
         return posts;
     }
 
-
+    @Transactional
     @GetMapping("/api/user-posts")
     public Page<PostDto> getUserPosts(@RequestParam String username, @RequestParam int page) {
         User user = userService.findUserByUsername(username);
@@ -58,7 +60,7 @@ public class TweetController {
         return posts;
     }
 
-
+    @Transactional
     @GetMapping("/api/liked-posts")
     public Page<PostDto> getLikedPosts(@RequestParam String username, @RequestParam int page) {
         User user = userService.findUserByUsername(username);
@@ -68,7 +70,7 @@ public class TweetController {
         return posts;
     }
 
-
+    @Transactional
     @GetMapping("/api/user-responses")
     public Page<PostDto> getUserResponses(@RequestParam String username, @RequestParam int page) {
         User user = userService.findUserByUsername(username);
@@ -78,7 +80,7 @@ public class TweetController {
         return posts;
     }
 
-
+    @Transactional
     @PutMapping("/api/likeTweet")
     public ResponseEntity<?> likeTweet(@RequestParam long postId, @AuthenticationPrincipal UserDetails userDetails) {
         Post post = postService.findPostById(postId);
@@ -92,7 +94,7 @@ public class TweetController {
         }
     }
 
-
+    @Transactional
     @PutMapping("/api/unlikeTweet")
     public ResponseEntity<?> unlikeTweet(@RequestParam long postId, @AuthenticationPrincipal UserDetails userDetails) {
         Post post = postService.findPostById(postId);

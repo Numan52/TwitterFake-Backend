@@ -10,12 +10,14 @@ public class PostDto {
     private Long parentPostId;
     private List<PostDto> responses;
     private String author;
+    private Long authorId;
     private Set<Long> likedBy;
     private LocalDateTime createdAt;
 
-    public PostDto(String content, Long id, Long parentPostId, List<PostDto> responses, String author, LocalDateTime createdAt, Set<Long> likedBy) {
+    public PostDto(String content, Long id, Long authorId , Long parentPostId, List<PostDto> responses, String author, LocalDateTime createdAt, Set<Long> likedBy) {
         this.content = content;
         this.id = id;
+        this.authorId = authorId;
         this.parentPostId = parentPostId;
         this.responses = responses;
         this.author = author;
@@ -77,5 +79,13 @@ public class PostDto {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Long getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
     }
 }
