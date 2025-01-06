@@ -33,6 +33,8 @@ public class TweetController {
     public ResponseEntity<?> postTweet(@RequestBody PostRequest postRequest) {
         try {
             Post savedPost = postService.savePost(postRequest);
+
+            System.out.println(savedPost);
             PostDto savedPostDto = postService.convertToDto(savedPost);
             return ResponseEntity.ok(savedPostDto);
         } catch (Exception e) {
@@ -49,6 +51,8 @@ public class TweetController {
 
         return posts;
     }
+
+
 
     @Transactional
     @GetMapping("/api/user-posts")

@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -77,6 +78,7 @@ public class PostService {
         Post post = new Post();
         post.setContent(postRequest.getContent());
         post.setUser(user);
+        post.setCreatedAt(LocalDateTime.now());
 
         if (postRequest.getParentPostId() != null) {
             Post parentPost = postRepository.findById(postRequest.getParentPostId())
@@ -103,6 +105,8 @@ public class PostService {
         return postRepository.findAllByLikedBy(Set.of(user), pageRequest)
                 .map(post -> convertToDto(post));
     }
+
+
 
     public Page<PostDto> getPostsRespondedTo(long userId, int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));

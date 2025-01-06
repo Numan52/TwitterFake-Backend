@@ -24,7 +24,7 @@ public class Post {
     @JsonIgnore
     private User user;
 
-    @CreationTimestamp
+
     private LocalDateTime createdAt;
 
     @ManyToMany
@@ -109,5 +109,19 @@ public class Post {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", user=" + user +
+                ", createdAt=" + createdAt +
+                ", likedBy=" + likedBy +
+                ", responses=" + responses +
+                ", parentPost=" + parentPost +
+                '}';
     }
 }
