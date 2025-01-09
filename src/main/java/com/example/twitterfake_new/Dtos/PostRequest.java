@@ -1,4 +1,4 @@
-package com.example.twitterfake_new.Models;
+package com.example.twitterfake_new.Dtos;
 
 public class PostRequest {
     private Long userId;

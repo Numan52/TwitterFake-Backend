@@ -1,8 +1,10 @@
 package com.example.twitterfake_new.Controllers;
 
 import com.example.twitterfake_new.Exceptions.UserNotFoundException;
-import com.example.twitterfake_new.Models.AuthenticationResponse;
+import com.example.twitterfake_new.Dtos.AuthenticationResponse;
 import com.example.twitterfake_new.Models.User;
+import com.example.twitterfake_new.Dtos.UserDto;
+import com.example.twitterfake_new.Services.ChatService;
 import com.example.twitterfake_new.Services.UserService;
 import com.example.twitterfake_new.security.JpaUserDetailsService;
 import com.example.twitterfake_new.security.JwtUtil;
@@ -12,10 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.io.IOException;
-import java.util.Base64;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -28,6 +28,9 @@ public class UserController {
 
     @Autowired
     private JpaUserDetailsService jpaUserDetailsService;
+
+    @Autowired
+    private ChatService chatService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -47,6 +50,22 @@ public class UserController {
             return ResponseEntity.status(500).body("Error while getting userId");
         }
     }
+
+    @Transactional
+    @GetMapping("/api/getUser")
+    public ResponseEntity<?> getUser(@RequestParam Long userId) {
+        try {
+            User user = userService.findById(userId);
+
+            UserDto userDto = new UserDto(user.getId(), user.getUsername(), user.getImageData());
+            return ResponseEntity.ok().body(userDto);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
+
 
     @Transactional
     @PutMapping("/api/updateUser")
@@ -81,7 +100,10 @@ public class UserController {
     public ResponseEntity<?> getUserImage(@RequestParam("userId") Long userId) {
         try {
             User user = userService.findById(userId);
-            return ResponseEntity.ok(Map.of("imageData", user.getImageData()));
+            Map<String, Object> json = new HashMap<>();
+            json.put("imageData", user.getImageData());
+
+            return ResponseEntity.ok(json);
 
         } catch (UserNotFoundException e) {
             e.printStackTrace();

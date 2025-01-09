@@ -1,12 +1,11 @@
 package com.example.twitterfake_new.Services;
 
 import com.example.twitterfake_new.Models.Post;
-import com.example.twitterfake_new.Models.PostDto;
-import com.example.twitterfake_new.Models.PostRequest;
+import com.example.twitterfake_new.Dtos.PostDto;
+import com.example.twitterfake_new.Dtos.PostRequest;
 import com.example.twitterfake_new.Models.User;
 import com.example.twitterfake_new.Repositories.PostRepository;
 import com.example.twitterfake_new.Repositories.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;

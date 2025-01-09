@@ -1,4 +1,4 @@
-package com.example.twitterfake_new.Models;
+package com.example.twitterfake_new.Dtos;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.example.twitterfake_new.Controllers;
 
-import com.example.twitterfake_new.Models.AuthenticationRequest;
-import com.example.twitterfake_new.Models.AuthenticationResponse;
+import com.example.twitterfake_new.Dtos.AuthenticationRequest;
+import com.example.twitterfake_new.Dtos.AuthenticationResponse;
 import com.example.twitterfake_new.Models.User;
 import com.example.twitterfake_new.Services.UserService;
 import com.example.twitterfake_new.security.JpaUserDetailsService;

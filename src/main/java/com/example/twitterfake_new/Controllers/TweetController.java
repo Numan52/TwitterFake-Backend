@@ -1,8 +1,8 @@
 package com.example.twitterfake_new.Controllers;
 
 import com.example.twitterfake_new.Models.Post;
-import com.example.twitterfake_new.Models.PostDto;
-import com.example.twitterfake_new.Models.PostRequest;
+import com.example.twitterfake_new.Dtos.PostDto;
+import com.example.twitterfake_new.Dtos.PostRequest;
 import com.example.twitterfake_new.Models.User;
 import com.example.twitterfake_new.Repositories.PostRepository;
 import com.example.twitterfake_new.Services.PostService;
